@@ -10,6 +10,8 @@ function Carousel() {
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <img src="1.jpg" className="d-block w-100" alt="..." />
+
+
                     </div>
                     <div className="carousel-item">
                         <img src="3.jpg" className="d-block w-100" alt="..." />

@@ -1,3 +1,5 @@
+
+
 function Carousel() {
     return (
         <div>
@@ -14,10 +16,10 @@ function Carousel() {
 
                     </div>
                     <div className="carousel-item">
-                        <img src="3.jpg" className="d-block w-100" alt="..." />
+                        <img src="3.jpeg" className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src="lake.jpg" className="d-block w-100" alt="..." />
+                        <img src="2.jpg" className="d-block w-100" alt="..." />
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

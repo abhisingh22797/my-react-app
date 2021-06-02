@@ -1,29 +1,41 @@
 
-import data from './data.js';
-
+import data from './components/data';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Cake = () => {
+    var [cakedata, setcakedata] = useState([]);
 
-    const passdata = data.map((dat) => {
-        return <div class="col-4" style={{
-            width: "18rem"
-        }}> <img src={dat.image} class="card-img-top" alt="..." />
+    useEffect(() => {
+        axios({ method: "get", url: "http://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
+            console.log(resp.data.data)
+            setcakedata(resp.data.data);
+        });
+    }, [])
+
+
+
+    const passdata = cakedata.map((dat) => {
+        return <div class="card">
+            <img class="card-img-top" src={dat.image} alt="Card image cap" />
             <div class="card-body">
                 <h5 class="card-title">{dat.name}</h5>
-                <p class="card-text">{dat.price}</p>
-                <a href="#" class="card-text">{dat.discount}</a>
-            </div></div>
+                <p class="card-text">{dat.name}</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">{dat.price}</small>
+            </div>
+        </div>
     });
 
-    return (<div class="container">
-        <div class="row">
-            {passdata}</div></div>
+    return (<div class="card-deck">
+
+        {passdata}</div>
     );
 }
 
+
+
 export default Cake;
-
-
-
 
 

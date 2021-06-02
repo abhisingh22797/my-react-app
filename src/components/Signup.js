@@ -26,7 +26,8 @@ class Signup extends React.Component {
             this.setState({
                 message: " Valid email address!",
                 color: "green"
-            })
+            });
+            var logedin = this.props.login;
 
 
 

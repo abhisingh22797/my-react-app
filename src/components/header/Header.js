@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function Header(props) {
     var value = "kuch";
     var getseachdata = function () {
@@ -5,6 +7,8 @@ function Header(props) {
 
         alert(value)
     }
+
+    var [login, setLogout] = useState("login");
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,6 +45,8 @@ function Header(props) {
 
                         <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={getseachdata
                         }>Search</button>
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={() => { if (login == "login") { setLogout("logout") } else { setLogout("login") } }}>{login}</button>
+
                     </form>
                 </div>
             </nav>

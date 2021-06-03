@@ -6,7 +6,7 @@ const Cake = () => {
     var [cakedata, setcakedata] = useState([]);
 
     useEffect(() => {
-        axios({ method: "get", url: "http://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
+        axios({ method: "get", url: "https://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
             console.log(resp.data.data)
             setcakedata(resp.data.data);
         });

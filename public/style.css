@@ -60,6 +60,48 @@ h3{
     font-size: 16px;
 }
 
+.logo[_ngcontent-hov-c37] {
+    width: 6%;
+    height: 50%;
+    object-fit: cover;
+}
+
+.navbar-brand{
+    color: #f4ac32!important;
+    font-size: 30px;
+}
+
 .fa{
      color:#4183D7;
+}
+.main input,
+.main input::-webkit-input-placeholder {
+  
+    margin: 15px 0;
+}
+
+
+.main{
+    padding: 40px 0;
+}
+.main-center h3{
+    text-align: center;
+}
+.main-center{
+    margin-top: 30px;
+    margin: 0 auto;
+ 
+   padding: 80px;
+   background:#2b2a2af5;
+       color: #FFF;
+   text-shadow: none;
+   -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+border-radius: 10px;
+
+}
+span.input-group-addon i {
+   color: #009edf;
+   font-size: 17px;
 }

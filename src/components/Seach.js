@@ -1,25 +1,33 @@
 
-import axios from "axios";
+import QueryString from "query-string";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 
-const Cake = () => {
+
+function Search(props) {
+    var query = QueryString.parse(props.location.search);
+    var [cakes, setCakes] = useState([]);
     var [laoder, setloader] = useState(true);
-    var [cakedata, setcakedata] = useState([]);
+
 
     useEffect(() => {
+        let searchUrl
+        console.log(query)
+        if (query) {
+            searchUrl = "http://apibyashu.herokuapp.com/api/searchcakes?q=" + query.q
+            axios({ url: searchUrl, method: "get" }).then((response) => {
+                if (response.data.data) {
+                    setloader(false)
+                    setCakes(response.data.data)
+                }
+            }, (error) => { })
+        }
+    }, []);
 
-        axios({ method: "get", url: "https://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
-            console.log(resp.data.data)
-            setloader(false)
-            setcakedata(resp.data.data);
-        });
-    }, [])
 
 
-
-    const passingdata = cakedata.map((data) => {
-
+    const passdata = cakes.map((data) => {
         return (
             <div class="col-lg-4 col-xs-12 text-center">
                 <div class="box">
@@ -44,11 +52,14 @@ const Cake = () => {
 
 
 
-    return (<div class="social-box bcc ">
+    return (<div class="social-box">
         <div class="container">
             <div class="row">
-
-                {passingdata}
+                <div className="mb20 col-md-12">
+                    <br />
+                    <h2 className="lead"><strong className="text-danger">{cakes.length}</strong> Cakes were found for the search <strong className="text-danger">{query && query.q}</strong></h2>
+                </div>
+                {passdata}
                 {laoder && <div class="m-5 p-5">
                     <div class="loader">
                         <span></span>
@@ -63,8 +74,6 @@ const Cake = () => {
     </div>
     );
 
-
 }
-export default Cake;
 
-
+export default Search

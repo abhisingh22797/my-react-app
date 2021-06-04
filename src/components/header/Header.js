@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 function Header(props) {
-    var value = "kuch";
-    var getseachdata = function () {
-        value = prompt("enter your name");
-
-        alert(value)
+    var searchString = "";
+    const getinputvalue = (e) => {
+        searchString = e.target.value;
+    };
+    const getseachdata = function (e) {
+        var url = "/search?q=" + searchString
+        console.log(url)
+        searchString && props.history.push(url)
+        searchString && props.history.go(url)
     }
 
     var [login, setLogout] = useState("login");
@@ -20,44 +24,31 @@ function Header(props) {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    {/* <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
+                    <ul className="navbar-nav mr-auto">
+
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                           </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="#">Action</a>
-                                <a className="dropdown-item" href="#">Another action</a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Something else here</a>
-                            </div>
+                            <form className="form-inline my-2 my-lg-0">
+                                <input className="form-control mr-sm-2 searc" type="search" placeholder="Search" aria-label="Search" onChange={getinputvalue} />
+
+                                <button className="sbutten btn btn-outline-success my-2 my-sm-0" type="button" onClick={getseachdata
+                                } >Search</button>
+
+
+                            </form>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul> */}
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
 
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={getseachdata
-                        }>Search</button>
+                    </ul>
 
 
-                    </form>
-                    <form className="form-inline my-2 my-lg-0">
-                        <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0" type="button" >{login}</button></Link>
+                    <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >{login}</button></Link>
 
-                    </form>
+
+
 
                 </div>
+
             </nav>
         </div >
     );
 }
-export default Header;
+export default withRouter(Header);

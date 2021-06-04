@@ -15,7 +15,7 @@ function Search(props) {
         let searchUrl
         console.log(query)
         if (query) {
-            searchUrl = "http://apibyashu.herokuapp.com/api/searchcakes?q=" + query.q
+            searchUrl = "https://apibyashu.herokuapp.com/api/searchcakes?q=" + query.q
             axios({ url: searchUrl, method: "get" }).then((response) => {
                 if (response.data.data) {
                     setloader(false)

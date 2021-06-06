@@ -23,7 +23,7 @@ function Search(props) {
                 }
             }, (error) => { })
         }
-    }, []);
+    }, [query.q]);
 
 
 

@@ -10,7 +10,7 @@ function Header(props) {
         var url = "/search?q=" + searchString
         console.log(url)
         searchString && props.history.push(url)
-        searchString && props.history.go(url)
+
     }
 
     var [login, setLogout] = useState("login");
@@ -36,11 +36,17 @@ function Header(props) {
 
                             </form>
                         </li>
+                        <li></li>
+
 
                     </ul>
+                    <Link to="/cart">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
+                        <i class="fa fa-shopping-cart" style={{ color: "black" }}></i> </button></Link>
 
 
-                    <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >{login}</button></Link>
+
+                    <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
+                        <i class="fa fa-user" style={{ color: "black" }}></i> {login}</button></Link>
 
 
 

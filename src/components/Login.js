@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 
@@ -10,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 
 const Login = (props) => {
-    console.log(props.history)
+    console.log(props)
     var [pass, setpass] = useState("");
     var [email, setemail] = useState("");
     var [passerror, passerrordata] = useState("");
@@ -97,10 +98,18 @@ const Login = (props) => {
             axios({ url: "https://apibyashu.herokuapp.com/api/login", method: "post", data: { "email": email, "password": pass } }).then((response) => {
                 console.log(response)
                 if (response.data.email) {
+
+                    props.dispatch({
+                        type: "LOGIN",
+                        payload: {
+                            token: response.data.token
+                        }
+                    })
                     props.history.push("/")
                 }
                 if (response.data.message) {
                     alert(response.data.message)
+
                 }
             }, (error) => {
                 console.log(error)
@@ -130,7 +139,7 @@ const Login = (props) => {
                         <div className="form-group">
                             <label for="email">Your Email</label>
                             <div className="input-group">
-                                <span className="input-group-addon"><i className="fa fa-envelope fa" aria-hidden="true"></i></span>
+
                                 <input type="text" className="form-control" name="email" placeholder="Enter your Email" onChange={onEmailChange} />
 
                             </div>
@@ -142,7 +151,7 @@ const Login = (props) => {
                         <div className="form-group">
                             <label for="password">Password</label>
                             <div className="input-group">
-                                <span className="input-group-addon"><i className="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+
                                 <input type="password" className="form-control" name="password" placeholder="Enter your Password" onChange={onPassChange} />
                             </div>
                             <span style={{ color: "#ff4242" }} >{passerror}</span>
@@ -167,6 +176,6 @@ const Login = (props) => {
 
 
 }
-export default Login;
+export default connect()(Login);
 
 

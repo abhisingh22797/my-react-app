@@ -102,9 +102,15 @@ const Login = (props) => {
                     props.dispatch({
                         type: "LOGIN",
                         payload: {
-                            token: response.data.token
+                            token: response.data.token,
+                            username: response.data.name,
+                            email: response.data.email,
+
                         }
                     })
+                    localStorage.setItem("usertoken", response.data.token)
+                    localStorage.setItem("username", response.data.username)
+                    localStorage.setItem("email", response.data.email)
                     props.history.push("/")
                 }
                 if (response.data.message) {

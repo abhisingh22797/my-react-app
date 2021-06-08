@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 function Header(props) {
     var searchString = "";
@@ -13,7 +14,14 @@ function Header(props) {
 
     }
 
-    var [login, setLogout] = useState("login");
+    const logout = (e) => {
+        e.preventDefault()
+
+        props.dispatch({
+            type: "LOGOUT"
+        })
+    };
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,12 +49,14 @@ function Header(props) {
 
                     </ul>
                     <Link to="/cart">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
-                        <i class="fa fa-shopping-cart" style={{ color: "black" }}></i> </button></Link>
+                        <i class="fa fa-shopping-cart" style={{ color: "white" }}></i> </button></Link>
 
 
 
-                    <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
-                        <i class="fa fa-user" style={{ color: "black" }}></i> {login}</button></Link>
+                    {props.islogedIn && <button className="btn btn-danger my-2 my-sm-0 " type="button" onClick={logout}>
+                        <i class="fa fa-sign-out" style={{ color: "white" }}></i>logout </button>}
+                    {!props.islogedIn && <Link to="/login">   <button className="btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
+                        <i class="fa fa-user" style={{ color: "black" }}></i> Login</button></Link>}
 
 
 
@@ -57,4 +67,13 @@ function Header(props) {
         </div >
     );
 }
-export default withRouter(Header);
+
+function propstomap(state) {
+    return {
+
+        token: state['token'],
+        islogedIn: state['islogedIn'],
+    }
+}
+
+export default connect(propstomap)(withRouter(Header));

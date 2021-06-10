@@ -2,15 +2,35 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import Authreducer from "../store/Authreducer";
 
 
-const Cakedetails = () => {
+const Cakedetails = (props) => {
 
     let query = useParams();
     console.log(">>>>>>>>>", query.cakeid);
 
     var [laoder, setloader] = useState(true);
     var [cakedata, setcakedata] = useState([]);
+
+
+    let addtocart = (e) => {
+        e.preventDefault()
+        alert(props.token)
+        let apiUrl = "https://apibyashu.herokuapp.com/api/addcaketocart"
+        axios({ url: apiUrl, method: "post", headers: { authtoken: props.token }, data: { cakeid: cakedata.cakeid, name: cakedata.name, image: cakedata.image, price: cakedata.price, weight: cakedata.weight } }).then((response) => {
+            if (response.data.data) {
+                props.dispatch({
+                    type: "ADDTOCART",
+                    payload: { cartdata: response.data.data }
+                })
+            }
+            console.log("add to cat ", response.data)
+            alert(response.data.message)
+        }, (error) => { })
+    }
+
 
     useEffect(() => {
         let searchUrl
@@ -81,7 +101,7 @@ const Cakedetails = () => {
 
 
                                 <div class="action">
-                                    <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                                    <button class="add-to-cart btn btn-default" type="button" onClick={addtocart}>add to cart</button>
 
                                 </div>
                             </div>
@@ -96,4 +116,10 @@ const Cakedetails = () => {
 }
 
 
-export default Cakedetails;
+export default connect(
+    function (state) {
+        return {
+            token: state.Authreducer.token
+        }
+    }
+)(Cakedetails);

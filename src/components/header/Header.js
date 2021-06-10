@@ -71,8 +71,8 @@ function Header(props) {
 function propstomap(state) {
     return {
 
-        token: state['token'],
-        islogedIn: state['islogedIn'],
+        token: state.Authreducer.token,
+        islogedIn: state.Authreducer.islogedIn,
     }
 }
 

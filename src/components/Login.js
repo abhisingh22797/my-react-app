@@ -108,6 +108,7 @@ const Login = (props) => {
 
                         }
                     })
+                    alert("token:>>> " + response.data.token)
                     localStorage.setItem("usertoken", response.data.token)
                     localStorage.setItem("username", response.data.username)
                     localStorage.setItem("email", response.data.email)

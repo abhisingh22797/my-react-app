@@ -1,24 +1,28 @@
 
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import { useState, useEffect } from "react";
 
 const Cake = () => {
     var [laoder, setloader] = useState(true);
     var [cakedata, setcakedata] = useState([]);
+    const [pageNumber, setPageNumber] = useState(0);
+    const userPerPage = 9
+    const pagesVisited = pageNumber * userPerPage
 
     useEffect(() => {
 
         axios({ method: "get", url: "https://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
             console.log(resp.data.data)
             setloader(false)
+
             setcakedata(resp.data.data);
         });
     }, [])
 
 
-
-    const passingdata = cakedata.map((data) => {
+    const passingdata = cakedata.slice(pagesVisited, pagesVisited + userPerPage).map((data) => {
 
         return (
             <div class="col-lg-4 col-xs-12 text-center">
@@ -41,14 +45,28 @@ const Cake = () => {
 
     })
 
+    const pageCount = Math.ceil(cakedata.length / userPerPage)
+    const changePage = ({ selected }) => {
+        setPageNumber(selected)
 
-
+    }
 
     return (<div class="social-box bcc ">
         <div class="container">
+
             <div class="row">
 
-                {passingdata}
+                {passingdata}{!laoder && <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                    containerClassName={"paginationBttns"}
+                    previousLinkClassName={"previousBttn"}
+                    nextLinkClassName={"nextBttn"}
+                    disabledClassName={"paginationDisabled"}
+                    activeClassName={"paginationActive"}
+                />}
                 {laoder && <div class="m-5 p-5">
                     <div class="loader">
                         <span></span>

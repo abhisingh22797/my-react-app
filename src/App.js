@@ -7,17 +7,35 @@ import Cart from './components/Cart';
 import Search from './components/Seach';
 import Checkout from './components/Checkout';
 import NotFound from './components/NotFound';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from "react-redux";
 
-function App() {
-  var [login, setLogin] = useState(false);
+function App(props) {
+  useEffect(() => {
+
+    if (props.isLoggedin) {
+      let apiUrl = "https://apibyashu.herokuapp.com/api/cakecart"
+      axios({ url: apiUrl, method: "post", data: {}, headers: { authtoken: props.token } }).then((response) => {
+        console.log(response)
+        if (response.data.data) {
+          props.dispatch({
+            type: "UPDATE_CART",
+            payload: {
+              cart: response.data.data,
+            }
+          })
+        }
+      }, (error) => { })
+    }
+  }, [props.isLoggedin])
   var details = {
     name: "Abhishek",
     website: "myCake"
   }
 
-  console.log('>>>>>>>', process.env);
+  console.log('>>>>>>>', process.env.REACT_APP_api_base_url);
   return (
     <div>
       <Router>
@@ -38,4 +56,11 @@ function App() {
   );
 }
 
-export default App;
+export default connect(
+  function (state) {
+    return {
+      token: state.Authreducer.token,
+      isLoggedin: state.Authreducer.islogedIn
+    }
+  }
+)(App);

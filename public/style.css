@@ -256,6 +256,12 @@ body {
       -webkit-animation-duration: .3s;
               animation-duration: .3s; }
   
+              .cartlogin{
+                text-align:center
+              }
+              .butstyle{
+                margin-left:12px
+              }
   .card {
     margin-top: 50px;
     background: #eee;
@@ -314,6 +320,37 @@ body {
     .color:first-of-type {
       margin-left: 20px; }
   
+
+.paginationBttns{
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content:center;
+}
+
+.paginationBttns a{
+  padding:10px;
+  margin:8px;
+  border-radius: 5px;
+  border:1px solid #ff9f1a;
+  background-color:#ff9f1a;
+  color: #fff;
+  cursor: pointer;
+}
+.paginationActive a:hover{
+  color:#FFF;
+  background-color:aqua;
+}
+
+.paginationActive a{
+  color:#FFF;
+  background-color:aqua;
+}
+
+
+
+
   .add-to-cart, .like {
     background: #ff9f1a;
     padding: 1.2em 1.5em;

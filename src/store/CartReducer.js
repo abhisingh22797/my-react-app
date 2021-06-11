@@ -2,7 +2,7 @@
 
 function CartReducer(state = {
     cart: [],
-    totalprice: 0
+    isLoading: false
 
 }, action) {
     switch (action.type) {
@@ -11,14 +11,22 @@ function CartReducer(state = {
             state = { ...state }
             if (action.payload.cartdata) {
                 state.cart.push(action.payload.cartdata)
+                state["isLoading"] = true;
             }
-            state["isLoading"] = false;
+
+            return state
+        }
+        case "UPDATE_CART": {
+            state = { ...state }
+            state.cart = action.payload.cart
+            state["isLoading"] = true;
+
             return state
         }
 
         case "EMPTYCART": {
             state = { ...state }
-
+            state.cart = []
             return state
 
         }

@@ -17,7 +17,7 @@ const Cakedetails = (props) => {
 
     let addtocart = (e) => {
         e.preventDefault()
-        alert(props.token)
+
         let apiUrl = "https://apibyashu.herokuapp.com/api/addcaketocart"
         axios({ url: apiUrl, method: "post", headers: { authtoken: props.token }, data: { cakeid: cakedata.cakeid, name: cakedata.name, image: cakedata.image, price: cakedata.price, weight: cakedata.weight } }).then((response) => {
             if (response.data.data) {

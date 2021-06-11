@@ -15,7 +15,7 @@ function Authreducer(state = {
             state['email'] = action.payload?.email
             state['username'] = action.payload?.username
             state['islogedIn'] = true
-            alert(state.token + state.username + state.email + state.islogedIn);
+
             return state
         }
 

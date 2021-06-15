@@ -18,7 +18,7 @@ const Cakedetails = (props) => {
     let addtocart = (e) => {
         e.preventDefault()
 
-        let apiUrl = "https://apibyashu.herokuapp.com/api/addcaketocart"
+        let apiUrl = "https://apifromashu.herokuapp.com/api/addcaketocart"
         axios({ url: apiUrl, method: "post", headers: { authtoken: props.token }, data: { cakeid: cakedata.cakeid, name: cakedata.name, image: cakedata.image, price: cakedata.price, weight: cakedata.weight } }).then((response) => {
             if (response.data.data) {
                 props.dispatch({
@@ -36,7 +36,7 @@ const Cakedetails = (props) => {
         let searchUrl
         console.log(query)
         if (query) {
-            searchUrl = "https://apibyashu.herokuapp.com/api/cake/" + query.cakeid
+            searchUrl = "https://apifromashu.herokuapp.com/api/cake/" + query.cakeid
             axios({ url: searchUrl, method: "get" }).then((response) => {
                 if (response.data.message === "Success") {
                     setloader(false)
@@ -52,7 +52,7 @@ const Cakedetails = (props) => {
 
     return (<div>
 
-        { laoder && <div class="m-5 p-5">
+        {laoder && <div class="m-5 p-5">
             <div class="loader">
                 <span></span>
                 <span></span>

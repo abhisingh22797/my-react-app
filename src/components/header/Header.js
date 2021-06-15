@@ -55,14 +55,23 @@ function Header(props) {
                     <Link to="/cart">   <button className="butstyle btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
                         <i class="fa fa-shopping-cart" style={{ color: "white" }}></i> {props.cartno > 0 && <span style={{ color: "white" }}>({props.cartno})</span>} </button></Link>
 
+                    {props.islogedIn && <Link to="/orders"> <button className="butstyle btn btn-danger my-2 my-sm-0 " type="button" >
+                        <i class="fa fa-shopping-cart" style={{ color: "white" }}></i>Orders </button></Link>}
 
 
                     {props.islogedIn && <button className="butstyle btn btn-danger my-2 my-sm-0 " type="button" onClick={logout}>
                         <i class="fa fa-sign-out" style={{ color: "white" }}></i>logout </button>}
+
+
                     {!props.islogedIn && <Link to="/login">   <button className="butstyle btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
                         <i class="fa fa-user" style={{ color: "black" }}></i> Login</button></Link>}
 
 
+                    {props.islogedIn && <button className="butstyle btn btn-outline-success my-2 my-sm-0 loginb" type="button" >
+                        <i class="fa fa-user" style={{ color: "black" }}></i> Welcome,{props.name}</button>}
+
+                    {props.email == 'ashu.lekhi0540@gmail.com' && <Link to="/admin">    <button className="butstyle btn btn-light my-2 my-sm-0 " type="button">
+                        <i class="fa fa-user" style={{ color: "black" }}></i> Admin </button></Link>}
 
 
                 </div>
@@ -76,6 +85,8 @@ function propstomap(state) {
     return {
 
         token: state.Authreducer.token,
+        email: state.Authreducer.email,
+        name: state.Authreducer.username,
         cartno: state.CartReducer.cart.length,
         islogedIn: state.Authreducer.islogedIn,
     }

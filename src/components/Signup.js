@@ -113,7 +113,7 @@ class Signup extends React.Component {
         }
 
         if (isValid == true) {
-            axios({ url: "https://apibyashu.herokuapp.com/api/register", method: "post", data: { "name": this.state.name, "email": this.state.email, "password": this.state.pass } }).then((response) => {
+            axios({ url: "https://apifromashu.herokuapp.com/api/register", method: "post", data: { "name": this.state.name, "email": this.state.email, "password": this.state.pass } }).then((response) => {
                 console.log(response)
                 if (response.data.message) {
                     alert(response.data.message)

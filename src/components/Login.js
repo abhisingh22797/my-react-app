@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { loginMiddleware } from "../store/Middlewares";
 
 
 
@@ -11,7 +12,8 @@ import { connect } from 'react-redux';
 
 
 const Login = (props) => {
-    console.log(props)
+
+    console.log(".....................>>>>>>>>>>>", props)
     var [pass, setpass] = useState("");
     var [email, setemail] = useState("");
     var [passerror, passerrordata] = useState("");
@@ -94,33 +96,35 @@ const Login = (props) => {
 
         if (isValid == true) {
 
+            var data = { "email": email, "password": pass };
+            props.dispatch(loginMiddleware(data))
 
-            axios({ url: "https://apibyashu.herokuapp.com/api/login", method: "post", data: { "email": email, "password": pass } }).then((response) => {
-                console.log(response)
-                if (response.data.email) {
+            // axios({ url: "https://apifromashu.herokuapp.com/api/login", method: "post", data: { "email": email, "password": pass } }).then((response) => {
+            //     console.log(response)
+            //     if (response.data.email) {
 
-                    props.dispatch({
-                        type: "LOGIN",
-                        payload: {
-                            token: response.data.token,
-                            username: response.data.name,
-                            email: response.data.email,
+            //         props.dispatch({
+            //             type: "LOGIN",
+            //             payload: {
+            //                 token: response.data.token,
+            //                 username: response.data.name,
+            //                 email: response.data.email,
 
-                        }
-                    })
+            //             }
+            //         })
 
-                    localStorage.setItem("usertoken", response.data.token)
-                    localStorage.setItem("username", response.data.username)
-                    localStorage.setItem("email", response.data.email)
-                    props.history.push("/")
-                }
-                if (response.data.message) {
-                    alert(response.data.message)
+            //         localStorage.setItem("usertoken", response.data.token)
+            //         localStorage.setItem("username", response.data.name)
+            //         localStorage.setItem("email", response.data.email)
+            //         props.history.push("/")
+            //     }
+            //     if (response.data.message) {
+            //         alert(response.data.message)
 
-                }
-            }, (error) => {
-                console.log(error)
-            })
+            //     }
+            // }, (error) => {
+            //     console.log(error)
+            // })
 
 
         }
@@ -183,6 +187,10 @@ const Login = (props) => {
 
 
 }
-export default connect()(Login);
+export default connect((state, props) => {
+    if (state.Authreducer.islogedIn) {
+        props.history.push('/')
+    }
+})(Login);
 
 

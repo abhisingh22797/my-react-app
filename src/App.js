@@ -6,6 +6,8 @@ import Cakedetails from './components/Cakedetails';
 import Cart from './components/Cart';
 import Search from './components/Seach';
 import Checkout from './components/Checkout';
+import Admin from './components/Admin';
+import Orders from './components/Orders';
 import NotFound from './components/NotFound';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -16,7 +18,7 @@ function App(props) {
   useEffect(() => {
 
     if (props.isLoggedin) {
-      let apiUrl = "https://apibyashu.herokuapp.com/api/cakecart"
+      let apiUrl = "https://apifromashu.herokuapp.com/api/cakecart"
       axios({ url: apiUrl, method: "post", data: {}, headers: { authtoken: props.token } }).then((response) => {
         console.log(response)
         if (response.data.data) {
@@ -45,9 +47,11 @@ function App(props) {
           <Route exact path="/signup"><Signup /></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/Cart" component={Cart}></Route>
+          <Route exact path="/admin" component={Admin}></Route>
           <Route exact path="/search" component={Search}></Route>
           <Route path="/checkout" component={Checkout}></Route>
           <Route exact path="/cake/:cakeid" component={Cakedetails}></Route>
+          <Route exact path="/orders" component={Orders}></Route>
 
           <Route exact path="/*"><NotFound /></Route>
         </Switch>

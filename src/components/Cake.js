@@ -13,7 +13,7 @@ const Cake = () => {
 
     useEffect(() => {
 
-        axios({ method: "get", url: "https://apibyashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
+        axios({ method: "get", url: "https://apifromashu.herokuapp.com/api/allcakes", data: JSON }).then((resp) => {
             console.log(resp.data.data)
             setloader(false)
 

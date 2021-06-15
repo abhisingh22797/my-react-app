@@ -1,10 +1,27 @@
-import { Link } from "react-router-dom";
-
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
 import { connect } from "react-redux";
-
+import { removeCakeFromCartMiddleware } from "../store/Middlewares";
 
 function Cart(props) {
     var totalprice = 0;
+    const emptyCart = (e) => {
+        e.preventDefault();
+        if (props.token) {
+            let apiUrl = "https://apifromashu.herokuapp.com/api/clearcart"
+            axios({ url: apiUrl, method: "post", data: {}, headers: { authtoken: props.token } }).then((response) => {
+                console.log(response)
+
+                props.dispatch({
+                    type: "EMPTYCART"
+                })
+
+
+                alert(response.data.message)
+            }, (error) => { })
+        }
+    }
+
 
 
     console.log("????????", props.cartdata)
@@ -14,12 +31,15 @@ function Cart(props) {
         {!props.token && <div className="mt-4 container card">
             <div className="card-body cartlogin">
                 You are not loggedin Please <Link to="/login">Login</Link> First .
-  </div>
+            </div>
         </div>}
 
         {
             props.token && <div className="mt-4 container">
                 <h2>Cart</h2>
+                <button type="button" className="btn btn-danger" onClick={emptyCart}>
+                    <span className="glyphiconglyphicon-remove" /> Click to Clear Cart
+                </button>
                 <div className=" bd-example bd-example-tabs">
                     <div className="cart-row">
                         <div className="col-12   bg-light">
@@ -50,8 +70,20 @@ function Cart(props) {
 
                                                 {props.cartdata.length > 0 &&
 
-                                                    props.cartdata.map((cakedata) => {
-                                                        { totalprice += cakedata.price }
+                                                    props.cartdata.map((cakedata, index) => {
+                                                        console.log("cakeindex>>>>>>>>>>", index)
+                                                        {
+                                                            totalprice += cakedata.price;
+
+                                                            props.dispatch({
+                                                                type: "TOTALPRICE",
+                                                                payload: {
+                                                                    price: totalprice,
+
+                                                                }
+                                                            })
+
+                                                        }
                                                         return (
 
                                                             <tr>
@@ -72,9 +104,13 @@ function Cart(props) {
                                                                 <td className="col-sm-1 col-md-1 text-center"><strong>&#8377;{cakedata.price}
                                                                 </strong></td>
                                                                 <td className="col-sm-1 col-md-1">
-                                                                    <button type="button" className="btn btn-danger">
+                                                                    <button type="button" className="btn btn-danger"
+
+                                                                        onClick={() => { props.dispatch(removeCakeFromCartMiddleware(cakedata.cakeid, props.token)) }}
+
+                                                                    >
                                                                         <span className="glyphiconglyphicon-remove" /> Remove
-                      </button></td>
+                                                                    </button></td>
                                                             </tr>
                                                         )
                                                     })
@@ -110,7 +146,7 @@ function Cart(props) {
                                                     <td>
                                                         <button type="button" className="btn btn-default">
                                                             <span className="glyphicon glyphicon-shopping-cart" /> Continue Shopping
-              </button></td>
+                                                        </button></td>
                                                     <td>
                                                         <Link to="/checkout" >  <button type="button" className="btn btn-success">
                                                             Checkout <span className="glyphicon glyphicon-play" />
@@ -134,6 +170,10 @@ function Cart(props) {
 
 }
 function mapStateToProps(state, props) {
+    if (state.CartReducer.removed) {
+        state.CartReducer.removed = false
+        window.location.reload()
+    }
 
     return {
 
@@ -143,4 +183,4 @@ function mapStateToProps(state, props) {
 
     }
 }
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps)(withRouter(Cart));

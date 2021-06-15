@@ -102,6 +102,7 @@ border-color: #565e64;
 .main input::-webkit-input-placeholder {
   
     margin: 15px 0;
+    height: 45px;
 }
 
 

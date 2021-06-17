@@ -21,4 +21,5 @@ var reducers = combineReducers({ CartReducer, Authreducer });
 
 let store = createStore(reducers, applyMiddleware(middle, thunk, sagMiddleware))
 sagMiddleware.run(MainSaga)
+
 export default store

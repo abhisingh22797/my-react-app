@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 
 const Orders = (props) => {
     const [orders, getOrders] = useState([])
+    const [orderlist, getorderlist] = useState(false)
 
     useEffect(() => {
         axios({
@@ -12,17 +13,24 @@ const Orders = (props) => {
             headers: { authtoken: props.token },
             method: 'post'
         }).then(res => {
-            const ordersList = res.data.cakeorders
-            getOrders(ordersList)
+            if (res.data.error == "no order found") {
 
+            } else {
+
+                const ordersList = res.data.cakeorders
+                getOrders(ordersList)
+
+                getorderlist(true)
+
+            }
         }, err => { })
-    }, [orders])
+    }, [])
 
     return (
         <div className="container" style={{ marginTop: "100px" }}>
             <h1>My Orders</h1>
-            {orders.length > 0 && <div className="accordion" id="accordionExample">
-                {
+            <div className="accordion" id="accordionExample">
+                {orderlist &&
                     orders.map((each, index) => {
                         return (
                             <>
@@ -73,9 +81,9 @@ const Orders = (props) => {
                         )
                     })
                 }
-            </div>}
+            </div>
             {orders.length === 0 && <div className="accordion" id="accordionExample">
-                No Orders Found!!
+                No Orders Found!
             </div>}
         </div>
     )
